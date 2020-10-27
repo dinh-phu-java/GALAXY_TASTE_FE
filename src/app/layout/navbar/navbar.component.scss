@@ -1,0 +1,65 @@
+@import '../../variable/variables';
+.navbar .navbar-brand img{
+    max-width: 390px;
+}
+
+.cart-icon{
+    &__login{
+        font-weight: 500;
+    }
+
+    *:not(:last-child){
+        margin-right:0.5rem;
+    }
+    a{
+        color:rgba(0,0,0,0.5);
+        text-decoration: none;
+        cursor:pointer;
+        text-transform:uppercase;
+    }
+
+    &__vertical{
+        color:rgba(0,0,0,0.5);
+    }
+
+    &__price{
+        color:$main-color;
+    }
+
+    &__detail{
+        .fas{
+            color:$main-color;
+        }
+        strong{
+            color:$main-color;
+            font-size:.8rem;
+            padding:.5rem;
+            border:1px solid $main-color;
+            position: relative;
+            background-color: white;
+            z-index: 2;
+            transition: all 0.2s;
+            span{
+                content: "";
+                width:50%;
+                height: 50%;
+                border:1px solid $main-color;
+                border-radius: 50%;
+                position: absolute;
+                top:0;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                z-index: -1;
+                transition: all 0.2s;
+            }
+            &:hover{
+                background-color: $main-color;
+                color:white;
+            }
+            &:hover span{
+                height: 60%;
+            }
+        }
+    }
+
+}
