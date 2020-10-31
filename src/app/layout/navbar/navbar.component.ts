@@ -15,10 +15,6 @@ export class NavbarComponent implements OnInit {
 
     this.navHeight = +this.navElement.offsetHeight;
 
-    console.log('inner height: ' + window.innerHeight);
-    console.log('outer height: ' + window.outerHeight);
-    console.log('pageYOffset: ' + window.pageYOffset);
-    console.log('scrollY: ' + window.scrollY);
   }
 
   onScroll(event: Event) {

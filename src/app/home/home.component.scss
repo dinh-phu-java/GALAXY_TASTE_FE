@@ -1,0 +1,9 @@
+@import "../variable/variables";
+#mainCarousel{
+    display: block;
+    background-color:$carousel-bg-color;
+}
+
+#weekly-feature{
+    padding:2rem;
+}
