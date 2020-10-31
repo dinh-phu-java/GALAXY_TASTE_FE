@@ -1,0 +1,45 @@
+@import "../../variable/variables";
+.selling-item{
+    &__card{
+        color:back;
+        
+        &:not(:last-child){
+            padding:0 1rem;
+        }
+
+        &:hover .card > .card-caption{
+            opacity: 1;
+            
+        }
+    }
+
+}
+
+.carousel{
+    .carousel-control{
+        opacity:0;
+    }
+
+    &:hover .carousel-control{
+        opacity:1;
+    }
+}
+
+.card{
+    cursor: pointer;
+    .card-caption{
+        position: absolute;
+        top:0;
+        opacity: 0;
+        display: block;
+        width:100%;
+        text-align: center;
+        background-color:rgba($color: $main-color, $alpha: .6);
+        transition: all .2s;
+        color:white;
+        font-size: 1.2rem;
+        text-transform:uppercase;
+        font-weight: 500;
+    }
+    
+}

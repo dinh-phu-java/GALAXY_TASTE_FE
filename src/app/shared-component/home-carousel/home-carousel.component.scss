@@ -23,6 +23,9 @@
     font-weight: 400;
     position: relative;
     text-align: center;
+    animation: carouselAnimate 1.5s ease;
+    backface-visibility: hidden;
+    // opacity: 0;
     h4{
         font-size: 2rem;
         
@@ -47,6 +50,28 @@
             margin:1rem;
         }
     }
+
+    &__1{
+        animation: carouselAnimate 1.5s ease-out;
+    }
     
+}
+
+
+@keyframes carouselAnimate{
+    0%{
+        opacity: 0;
+        // transform: rotateY(0deg);
+    }
+    10%{
+        // opacity: 0;
+    }
+    80%{
+        opacity: .7;
+    }
+    100%{
+        transform: rotateY(360deg);
+        opacity: 1;
+    }
 }
 
