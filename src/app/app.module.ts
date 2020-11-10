@@ -11,9 +11,8 @@ import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
-    FooterComponent
+    AppComponent
+   
     
   ],
   imports: [
