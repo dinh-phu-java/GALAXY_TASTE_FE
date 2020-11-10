@@ -1,0 +1,48 @@
+@import "../../variable/variables";
+@import "../../variable/breakpoint";
+.suggest{
+    &__item{
+        text-align: left;
+        margin-bottom:0.5rem;
+        &-title{
+            color:$main-color;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        &-horizontal{
+            height: 2px;
+            width: 6%;
+            display: block;
+            background-color: rgba( $color-secondary,0.7);
+            margin-bottom:1rem;
+        }
+        &-text{
+            font-size:0.9rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            color:$main-color;
+        }
+
+        &-price{
+            color:black;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .row{
+            &:not(:last-child){
+                margin-bottom:.5rem;
+            }
+        }
+
+        @include respond(md){
+            &__item{
+                margin-bottom: none;
+                &:not(:last-child){
+                    margin-right:0.5rem;
+                }
+            }
+        }
+    }
+}
