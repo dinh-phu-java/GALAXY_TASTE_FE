@@ -5,7 +5,10 @@ import { AppComponent } from './app.component';
 import { AppRouting } from './app-routing.module';
 import { NotificationService } from './services/notification.service';
 import { NotificationModule } from './notification.module';
-
+import { StoreModule } from '@ngrx/store';
+import * as AppStore from './store/app.store';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './services/auth-store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,9 @@ import { NotificationModule } from './notification.module';
     BrowserModule,
     AppRouting,
     HttpClientModule,
-    NotificationModule
+    NotificationModule,
+    StoreModule.forRoot(AppStore.appReducer),
+    EffectsModule.forRoot([AuthEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

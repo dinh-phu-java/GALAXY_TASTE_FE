@@ -10,7 +10,9 @@ import { Role } from 'src/app/enum/role.enum';
 import { User } from 'src/app/model/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
-
+import * as AppStore from '../../store/app.store';
+import * as AuthActions from '../../services/auth-store/auth.actions';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,17 +21,29 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public isLoading = false;
+  public isAdmin=false;
+  public isLoggedIn=false;
   subscription: Subscription;
-  constructor(private authService: AuthenticationService,
+  constructor(
+    private authService: AuthenticationService,
     private notifier: NotificationService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppStore.AppState>
   ) { }
 
   ngOnInit(): void {
-    const loginUser = this.authService.getUserFormLocalCache();
-    if (this.authService.isUserLoggedIn() && loginUser.role === Role.ADMIN) {
+    
+    this.subscription=this.store.select('auth').subscribe(stateData=>{
+      console.log(stateData);
+      this.isLoading=stateData.loading;
+      this.isAdmin=stateData.isAdmin;
+      this.isLoggedIn=stateData.isLoggedIn;
+    });
+
+    if(this.isLoggedIn && this.isAdmin){
       this.router.navigate(['/admin/action']);
     }
+
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-Z0-9]{6,}$")])
@@ -38,23 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.isLoading = true;
-    this.subscription = this.authService.login(this.loginForm.value).subscribe((resData: HttpResponse<User>) => {
-      this.isLoading = false;
-      const token = resData.headers.get(HeaderType.JWT_TOKEN);
-      const user = resData.body;
-      console.log(user);
-      this.authService.saveToken(token);
-      this.authService.addUserToLocalCache(user);
-      this.router.navigate(['/admin/action']);
-    },
-      (errorRes: HttpErrorResponse) => {
-        console.log(errorRes);
-        this.sendErrorNotification(NotificationType.ERROR, errorRes.error.message);
-        this.isLoading = false;
-      });
-
-
+    this.store.dispatch(new AuthActions.LoginStart(this.loginForm.value));
   }
 
   public sendErrorNotification(type: NotificationType, message: string) {
