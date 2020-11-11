@@ -9,8 +9,8 @@ export class AuthenticationService {
 
     private host = environment.apiUrl;
     private token: string;
-    // private loggedInUsername: string;
-    // private jwtHelper = new JwtHelperService();
+    private loggedInUsername: string;
+    private jwtHelper = new JwtHelperService();
     constructor(private http: HttpClient) { }
 
     // public login(user: User): Observable<HttpResponse<User>> {
@@ -50,18 +50,18 @@ export class AuthenticationService {
         return this.token;
     }
 
-    // public isUserLoggedIn(): boolean {
-    //     this.loadToken();
-    //     if (this.token != null && this.token !== '') {
-    //         if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
-    //             if (!this.jwtHelper.isTokenExpired(this.token)) {
-    //                 this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
-    //                 return true;
-    //             }
-    //         }
-    //     } else {
-    //         this.logOut();
-    //     }
-    //     return false;
-    // }
+    public isUserLoggedIn(): boolean {
+        this.loadToken();
+        if (this.token != null && this.token !== '') {
+            if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
+                if (!this.jwtHelper.isTokenExpired(this.token)) {
+                    this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
+                    return true;
+                }
+            }
+        } else {
+            this.logOut();
+        }
+        return false;
+    }
 }

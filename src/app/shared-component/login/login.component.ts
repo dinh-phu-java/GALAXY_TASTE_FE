@@ -34,15 +34,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     
     this.subscription=this.store.select('auth').subscribe(stateData=>{
-      console.log(stateData);
       this.isLoading=stateData.loading;
       this.isAdmin=stateData.isAdmin;
       this.isLoggedIn=stateData.isLoggedIn;
     });
 
-    if(this.isLoggedIn && this.isAdmin){
-      this.router.navigate(['/admin/action']);
-    }
+    this.store.dispatch(new AuthActions.AutoLogin());
 
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),
