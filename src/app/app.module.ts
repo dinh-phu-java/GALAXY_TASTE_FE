@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import * as AppStore from './store/app.store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './services/auth-store/auth.effects';
+import { ProductEffects } from './admin/product-store/product.effects';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { AuthEffects } from './services/auth-store/auth.effects';
     HttpClientModule,
     NotificationModule,
     StoreModule.forRoot(AppStore.appReducer),
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([AuthEffects,ProductEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]
