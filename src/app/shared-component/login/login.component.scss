@@ -4,6 +4,9 @@
     For the media queries use @screen-sm-min instead of 768px.
     For .omb_spanOr use @body-bg instead of white.
 */
+input.ng-invalid.ng-touched{
+	border:1px solid red;
+}
 
 @media (min-width: 768px) {
     .omb_row-sm-offset-3 div:first-child[class*="col-"] {
