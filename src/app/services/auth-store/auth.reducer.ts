@@ -2,6 +2,8 @@ import { User } from 'src/app/model/user.model';
 import { AuthActionType } from './auth.actions';
 import * as AuthActions from './auth.actions';
 import { Role } from 'src/app/enum/role.enum';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 export interface State {
     user: User;
     token: string;
@@ -19,6 +21,7 @@ const initialState: State = {
 }
 
 export function authReducer(state = initialState, action: AuthActions.AuthActionType) {
+   let jwtHelper = new JwtHelperService();
     switch (action.type) {
         case AuthActions.LOGIN_START:
             return {
@@ -27,12 +30,22 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
             }
         case AuthActions.AUTHENTICATE_SUCCESS:
             const authorize=action.payload.user.role === Role.ADMIN ? true : false;
+            let isLogin=false;
+            if (action.payload.token != null && action.payload.token !== '') {
+                if (jwtHelper.decodeToken(action.payload.token).sub != null || '') {
+                    if (!jwtHelper.isTokenExpired(action.payload.token)) {
+                        isLogin= true;
+                    }
+                }
+            } else {
+                isLogin=false;
+            }
             return {
                 ...state,
                 loading:false,
                 user:action.payload.user,
                 token:action.payload.token,
-                isLoggedIn:true,
+                isLoggedIn:isLogin,
                 isAdmin:authorize
             }
         case AuthActions.AUTHENTICATE_FAIL:

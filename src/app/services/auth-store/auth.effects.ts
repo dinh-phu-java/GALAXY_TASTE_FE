@@ -71,4 +71,13 @@ export class AuthEffects{
         })
     )
 
+    @Effect({dispatch:false})
+    logout=this.actions.pipe(
+        ofType(AuthActions.LOGOUT),
+        tap(()=>{
+            this.authService.logOut();
+            // this.router.navigate(['/admin']);
+        })
+    )
+
 }

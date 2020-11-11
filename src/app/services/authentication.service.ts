@@ -9,14 +9,14 @@ export class AuthenticationService {
 
     private host = environment.apiUrl;
     private token: string;
-    private loggedInUsername: string;
-    private jwtHelper = new JwtHelperService();
+    // private loggedInUsername: string;
+    // private jwtHelper = new JwtHelperService();
     constructor(private http: HttpClient) { }
 
-    public login(user: User): Observable<HttpResponse<User>> {
-        // return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
-        return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
-    }
+    // public login(user: User): Observable<HttpResponse<User>> {
+    //     // return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
+    //     return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
+    // }
 
     public register(user: User): Observable<User> {
         return this.http.post<User>(`${this.host}/user/register`, user);
@@ -24,7 +24,7 @@ export class AuthenticationService {
 
     public logOut(): void {
         this.token = null;
-        this.loggedInUsername = null;
+        // this.loggedInUsername = null;
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         localStorage.removeItem('users');
@@ -50,18 +50,18 @@ export class AuthenticationService {
         return this.token;
     }
 
-    public isUserLoggedIn(): boolean {
-        this.loadToken();
-        if (this.token != null && this.token !== '') {
-            if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
-                if (!this.jwtHelper.isTokenExpired(this.token)) {
-                    this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
-                    return true;
-                }
-            }
-        } else {
-            this.logOut();
-        }
-        return false;
-    }
+    // public isUserLoggedIn(): boolean {
+    //     this.loadToken();
+    //     if (this.token != null && this.token !== '') {
+    //         if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
+    //             if (!this.jwtHelper.isTokenExpired(this.token)) {
+    //                 this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
+    //                 return true;
+    //             }
+    //         }
+    //     } else {
+    //         this.logOut();
+    //     }
+    //     return false;
+    // }
 }
