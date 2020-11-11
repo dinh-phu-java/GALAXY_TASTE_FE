@@ -64,7 +64,8 @@ export class AuthEffects {
         tap((authSuccessData: AuthActions.AuthenticationSuccess) => {
             this.authService.saveToken(authSuccessData.payload.token);
             this.authService.addUserToLocalCache(authSuccessData.payload.user);
-            this.router.navigate(['/admin/action']);
+            this.notifier.notify(NotificationType.SUCCESS,`Login Success with `.toUpperCase() +`${authSuccessData.payload.user.email}`);
+            // this.router.navigate(['/admin/action']);
         })
     )
 

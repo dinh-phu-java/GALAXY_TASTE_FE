@@ -9,7 +9,7 @@ import { AdminComponent } from './admin.component';
 const routes: Routes = [
     { path: '', component: AdminComponent },
     {
-        path: 'action', component: ActionComponent,canActivateChild:[AdminGuard], children: [
+        path: 'action', component: ActionComponent, canActivateChild:[AdminGuard], children: [
             { path: '', component: StartComponent },
             { path: 'create-product', component: CreateProductComponent }
         ]

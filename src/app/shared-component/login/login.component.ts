@@ -1,13 +1,11 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NotifierService } from 'angular-notifier';
+
 import { Subscription } from 'rxjs';
-import { HeaderType } from 'src/app/enum/header-type.enum';
+
 import { NotificationType } from 'src/app/enum/notification-type.enum';
-import { Role } from 'src/app/enum/role.enum';
-import { User } from 'src/app/model/user.model';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import * as AppStore from '../../store/app.store';
@@ -32,14 +30,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    
+    this.store.dispatch(new AuthActions.AutoLogin());
+
     this.subscription=this.store.select('auth').subscribe(stateData=>{
       this.isLoading=stateData.loading;
       this.isAdmin=stateData.isAdmin;
       this.isLoggedIn=stateData.isLoggedIn;
     });
 
-    this.store.dispatch(new AuthActions.AutoLogin());
+    if(this.isLoggedIn){
+      this.router.navigate(['/admin/action']);
+    }
 
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),

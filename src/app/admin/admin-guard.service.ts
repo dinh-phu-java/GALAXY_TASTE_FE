@@ -24,8 +24,9 @@ export class AdminGuard implements CanActivate, CanActivateChild {
         return this.store.select('auth').pipe(
             take(1),
             map(authState => {
+                console.log(authState)
                 if (authState.isLoggedIn && authState.isAdmin) {
-                    this.notifier.notify(NotificationType.SUCCESS, 'Welcome to Admin Page'.toUpperCase());
+                    // this.notifier.notify(NotificationType.SUCCESS, 'Welcome to Admin Page'.toUpperCase());
                     return true
                 } else {
                     this.notifier.notify(NotificationType.WARNING, 'You don\'t have permission to access this page'.toUpperCase());
