@@ -7,11 +7,12 @@ import { ActionComponent } from './action/action.component';
 import { StartComponent } from './action/start/start.component';
 import { CreateProductComponent } from './action/create-product/create-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
     declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent],
-    imports:[AdminRouting,ShareComponent,ReactiveFormsModule],
+    imports:[AdminRouting,ShareComponent,ReactiveFormsModule,CommonModule],
     exports:[AdminComponent]
 })
 

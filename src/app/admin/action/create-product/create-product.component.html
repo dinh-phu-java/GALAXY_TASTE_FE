@@ -6,12 +6,67 @@
                 <!-- jquery validation -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                        <h3 class="card-title">Create Product Form </h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <p>Create Product</p>
-                    <button class="btn btn-primary" (click)="createProduct()">Create Product</button>
+                    <div class="container">
+                        <form [formGroup]="createForm" (ngSubmit)="createProduct()">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" class="form-control" id="productName"
+                                        formControlName="productName" placeholder="Product Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="productPrice">Product Price</label>
+                                    <input type="text" class="form-control" id="productPrice"
+                                        formControlName="productPrice" placeholder="Product Price">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="tag">Tag</label>
+                                    <input type="text" class="form-control" formControlName="tag" id="tag">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="categoryId">State</label>
+                                    <select id="categoryId" formControlName="categoryId" class="form-control">
+                                        <option *ngFor="let category of categories" [ngValue]="category.categoryId">
+                                            {{category.categoryName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" id="description" formControlName="description"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-info" (click)="addImageControl()" [disabled]="countImage === maxImage">Add Image</button>
+                            </div>
+                            <hr>
+                            <div  formArrayName="productImageUrl">
+                                <div class="form-row" *ngFor="let imageControl of getImageControls();let i = index">
+                                    <div class="form-group col-md-10">
+                                        <div class="custom-file">
+                                            
+                                            <input type="file" class="custom-file-input" accept="image/*"  [formControlName]="i" (change)="onImageControlChange($event.target.files[0].name,$event.target.files[0],i)" id="productImageUrl">
+                                            <label class="custom-file-label" *ngIf="!imageFileName[i]" for="productImageUrl">Choose Image</label>
+                                            <label class="custom-file-label" *ngIf="imageFileName[i]" for="productImageUrl">{{imageFileName[i]}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <button type="button" class="btn btn-danger" (click)="removeImageControl(i)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled">Create Product</button>
+                        </form>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
