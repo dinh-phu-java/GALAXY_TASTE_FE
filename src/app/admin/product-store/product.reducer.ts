@@ -22,7 +22,13 @@ export function productReducer(state = initialState, action: ProductAction.Produ
         case ProductAction.CREATE_PRODUCT:
             return {
                 ...state,
+                loading:true
             }
+            case ProductAction.ACTION_COMPLETE:
+                return {
+                    ...state,
+                    loading:false
+                }
         default:
             return state;
     }

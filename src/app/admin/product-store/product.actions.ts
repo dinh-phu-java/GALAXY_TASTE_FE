@@ -6,10 +6,14 @@ export const UPDATE_PRODUCT = '[Product] Update';
 export const DELETE_PRODUCT = '[Product] Delete';
 export const GET_PRODUCT_LIST = '[Product] Get Product List';
 export const GET_PRODUCT = '[Product] Get Product'
+export const ACTION_COMPLETE ='[Product] Complement'
 
+export class ActionComplete implements Action{
+    readonly type=ACTION_COMPLETE;
+}
 export class CreateProduct implements Action {
     readonly type = CREATE_PRODUCT;
-    constructor(public payload: Product) { }
+    constructor(public payload: FormData) { }
 }
 
 export class UpdateProduct implements Action {
@@ -31,4 +35,4 @@ export class GetProduct implements Action {
     constructor(public payload: number) { }
 }
 
-export type ProductType = CreateProduct | UpdateProduct | DeleteProduct | GetProductList | GetProduct;
+export type ProductType = CreateProduct | UpdateProduct | DeleteProduct | GetProductList | GetProduct | ActionComplete;

@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Product } from 'src/app/model/product.model';
 import * as ProductAction from './product.actions';
 import {environment} from 'src/environments/environment';
 import { of } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationType } from 'src/app/enum/notification-type.enum';
 @Injectable()
 export class ProductEffects{
     private host= environment.apiUrl;
-    constructor(private actions:Actions,private http:HttpClient){}
+    constructor(private actions:Actions,private http:HttpClient,private notifier:NotificationService){}
 
     @Effect()
     createProduct= this.actions.pipe(
@@ -20,13 +22,21 @@ export class ProductEffects{
             .pipe(
                 map((resData:Product)=>{
                     console.log(resData);
-                    return of();
+                    return new ProductAction.ActionComplete();
                 }),
                 catchError(errorRes=>{
                     console.log(errorRes)
                     return of();
                 })
             )
+        })
+    )
+
+    @Effect({dispatch:false})
+    actionComplete=this.actions.pipe(
+        ofType(ProductAction.ACTION_COMPLETE),
+        tap(()=>{
+            this.notifier.notify(NotificationType.SUCCESS,`Upload file Complete`.toUpperCase());
         })
     )
 }

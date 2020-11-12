@@ -10,6 +10,9 @@ import { Category } from 'src/app/model/category.model';
 import { FileService } from 'src/app/services/file.services';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { HttpClient } from '@angular/common/http';
+import { ProductService } from 'src/app/services/product.service';
+
 
 @Component({
   selector: 'app-create-product',
@@ -24,14 +27,22 @@ export class CreateProductComponent implements OnInit {
   public countImage: number = 1;
   public imageFileName: string[] = [];
   public fileType: string[] = [];
-  public maxFileSize:number;
-  public isButtonDisabled:boolean=false;
-  constructor(private store: Store<AppStore.AppState>, private categoryService: CategoryService, private fileService: FileService,private notifier:NotificationService) { }
+  public maxFileSize: number;
+  public isButtonDisabled: boolean = false;
+  public imageFiles: File[] = [];
+  constructor(
+    private store: Store<AppStore.AppState>,
+    private categoryService: CategoryService,
+    private fileService: FileService,
+    private notifier: NotificationService,
+    private productService:ProductService
+  ) { }
 
   ngOnInit(): void {
     this.categories = this.categoryService.getCategory();
     this.fileType = this.fileService.getFileType();
-    this.maxFileSize=this.fileService.getFileSize();
+    this.maxFileSize = this.fileService.getFileSize();
+
     this.createForm = new FormGroup({
       'productName': new FormControl(null, Validators.required),
       'productPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+\.[0-9]{1,}$')]),
@@ -42,19 +53,18 @@ export class CreateProductComponent implements OnInit {
       ]),
       'categoryId': new FormControl(null, Validators.required)
     })
+
     this.createForm.get('categoryId').setValue(1, { onlySelf: true });
   }
 
   createProduct() {
-    // this.createForm.get('productImageUrl')
-    console.log(this.createForm);
     let product = new Product();
     product = this.createForm.value;
+    product.imageFiles=this.imageFiles.slice();
     product.productImageUrl = this.imageFileName;
     console.log(product);
-    // const product = new Product(null, 'product name', 234.2, '#product tag', 'product description', ['image1', 'image2'], 1);
-    // const product = new Product();
-    // this.store.dispatch(new ProductAction.CreateProduct(product));
+    const formData=this.productService.createProductFormData(product);
+    this.store.dispatch(new ProductAction.CreateProduct(formData));
   }
 
   addImageControl() {
@@ -70,21 +80,20 @@ export class CreateProductComponent implements OnInit {
 
   removeImageControl(index: number) {
     (<FormArray>this.createForm.get('productImageUrl')).removeAt(index);
-
+    this.imageFileName.splice(index, 1);
+    this.imageFiles.splice(index, 1);
     this.countImage--;
   }
 
   onImageControlChange(fileName: string, fileImage: File, index: number) {
     this.imageFileName.push(fileName);
-    if(fileImage.size > this.maxFileSize){
-      this.isButtonDisabled=true;
-      this.notifier.notify(NotificationType.ERROR,`File Size Should be less than ${this.maxFileSize/1024/1024}MB`.toUpperCase());
-    }else{
-      this.isButtonDisabled=false;
+    this.imageFiles.push(fileImage);
+    if (fileImage.size > this.maxFileSize) {
+      this.isButtonDisabled = true;
+      this.notifier.notify(NotificationType.ERROR, `File Size Should be less than ${this.maxFileSize / 1024 / 1024}MB`.toUpperCase());
+    } else {
+      this.isButtonDisabled = false;
     }
-    console.log(fileName);
-    console.log(fileImage.size);
-    console.log(index);
 
   }
 
