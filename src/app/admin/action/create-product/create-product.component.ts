@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as AppStore from '../../../store/app.store';
 import * as AuthActions from '../../../services/auth-store/auth.actions';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from 'src/app/services/product.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss']
 })
-export class CreateProductComponent implements OnInit {
+export class CreateProductComponent implements OnInit, OnDestroy {
 
   public createForm: FormGroup;
   public categories: Category[] = [];
@@ -30,12 +31,14 @@ export class CreateProductComponent implements OnInit {
   public maxFileSize: number;
   public isButtonDisabled: boolean = false;
   public imageFiles: File[] = [];
+  public isLoading: boolean = false;
+  public subscription: Subscription;
   constructor(
     private store: Store<AppStore.AppState>,
     private categoryService: CategoryService,
     private fileService: FileService,
     private notifier: NotificationService,
-    private productService:ProductService
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +48,7 @@ export class CreateProductComponent implements OnInit {
 
     this.createForm = new FormGroup({
       'productName': new FormControl(null, Validators.required),
-      'productPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+\.[0-9]{1,}$')]),
+      'productPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,4}){0,1}$')]),
       'tag': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'productImageUrl': new FormArray([
@@ -55,15 +58,18 @@ export class CreateProductComponent implements OnInit {
     })
 
     this.createForm.get('categoryId').setValue(1, { onlySelf: true });
+    this.subscription = this.store.select('product').subscribe(productState => {
+      this.isLoading = productState.loading;
+    })
   }
 
   createProduct() {
     let product = new Product();
     product = this.createForm.value;
-    product.imageFiles=this.imageFiles.slice();
+    product.imageFiles = this.imageFiles.slice();
     product.productImageUrl = this.imageFileName;
     console.log(product);
-    const formData=this.productService.createProductFormData(product);
+    const formData = this.productService.createProductFormData(product);
     this.store.dispatch(new ProductAction.CreateProduct(formData));
   }
 
@@ -102,7 +108,6 @@ export class CreateProductComponent implements OnInit {
       let file = control.value;
       let startIndex = file.indexOf('.') + 1;
       let suffix = file.substring(startIndex).toLowerCase();
-      console.log(this.fileType);
       if (this.fileType.indexOf(suffix) !== -1) {
         return null;
       } else {
@@ -110,6 +115,12 @@ export class CreateProductComponent implements OnInit {
       }
     }
     return { 'fileTypeForbidden': true };
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
 

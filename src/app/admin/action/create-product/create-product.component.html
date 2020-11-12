@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled || createForm.invalid">Create Product</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled || createForm.invalid"> <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i> Create Product</button>
                         </form>
                     </div>
                 </div>
