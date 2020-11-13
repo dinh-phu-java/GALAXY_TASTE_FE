@@ -8,6 +8,7 @@ import {environment} from 'src/environments/environment';
 import { of } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { Router } from '@angular/router';
 @Injectable()
 export class ProductEffects{
     private host= environment.apiUrl;
@@ -26,7 +27,7 @@ export class ProductEffects{
                 }),
                 catchError(errorRes=>{
                     console.log(errorRes)
-                    return of();
+                    return of(new ProductAction.ActionFailed());
                 })
             )
         })
@@ -37,6 +38,7 @@ export class ProductEffects{
         ofType(ProductAction.ACTION_COMPLETE),
         tap(()=>{
             this.notifier.notify(NotificationType.SUCCESS,`Upload file Complete`.toUpperCase());
+            
         })
     )
 }

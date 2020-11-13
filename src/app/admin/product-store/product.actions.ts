@@ -5,8 +5,13 @@ export const CREATE_PRODUCT = '[Product] Create';
 export const UPDATE_PRODUCT = '[Product] Update';
 export const DELETE_PRODUCT = '[Product] Delete';
 export const GET_PRODUCT_LIST = '[Product] Get Product List';
-export const GET_PRODUCT = '[Product] Get Product'
-export const ACTION_COMPLETE ='[Product] Complement'
+export const GET_PRODUCT = '[Product] Get Product';
+export const ACTION_COMPLETE ='[Product] Complement';
+export const ACTION_FAILED= '[Product] Failed';
+
+export class ActionFailed implements Action{
+    readonly type=ACTION_FAILED;
+}
 
 export class ActionComplete implements Action{
     readonly type=ACTION_COMPLETE;
@@ -35,4 +40,4 @@ export class GetProduct implements Action {
     constructor(public payload: number) { }
 }
 
-export type ProductType = CreateProduct | UpdateProduct | DeleteProduct | GetProductList | GetProduct | ActionComplete;
+export type ProductType = CreateProduct | UpdateProduct | DeleteProduct | GetProductList | GetProduct | ActionComplete | ActionFailed;
