@@ -132,4 +132,25 @@ export class ProductEffects{
             )
         })
     )
+
+    @Effect()
+    deleteProduct=this.actions.pipe(
+        ofType(ProductAction.DELETE_PRODUCT),
+        switchMap((productCode:ProductAction.DeleteProduct)=>{
+            return this.http.delete<Product>(`${this.host}/product/${productCode.payload}`)
+            .pipe(
+                map(resData=>{
+                    console.log(resData);
+                    // return new ProductAction.DeleteProductComplete();
+                    this.notifier.notify(NotificationType.SUCCESS,`Delete Product Complete`.toUpperCase());
+                    return new ProductAction.GetProductList();
+                }),
+                catchError(errorRes=>{
+                    this.notifier.notify(NotificationType.ERROR,`Delete Product Failed`.toUpperCase());
+                    return of(new ProductAction.DeleteProductFailed());
+                })
+            )
+        })
+    )
+
 }

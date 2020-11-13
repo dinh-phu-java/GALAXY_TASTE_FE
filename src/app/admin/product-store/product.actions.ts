@@ -14,6 +14,10 @@ export const GET_PRODUCT_LIST_FAILED='[Product] Get Product List Failed';
 export const SET_CURRENT_PRODUCT='[Product] Set Current Product';
 export const UPDATE_PRODUCT_COMPLETE='[Product] Update Product Complete';
 export const UPDATE_PRODUCT_FAILED='[Product] Update Product Failed';
+export const DELETE_PRODUCT_COMPLETE = '[Product] Delete Product Complete';
+export const DELETE_PRODUCT_FAILED = '[Product] Delete Product Failed';
+
+
 
 export class UpdateProductFailed implements Action{
     readonly type=UPDATE_PRODUCT_FAILED;
@@ -60,7 +64,7 @@ export class UpdateProduct implements Action {
 
 export class DeleteProduct implements Action {
     readonly type = DELETE_PRODUCT;
-    constructor(public payload: number) { }
+    constructor(public payload: string) { }
 }
 
 export class GetProductList implements Action {
@@ -70,6 +74,14 @@ export class GetProductList implements Action {
 export class GetProduct implements Action {
     readonly type = GET_PRODUCT;
     constructor(public payload: number) { }
+}
+
+export class DeleteProductComplete implements Action{
+    readonly type=DELETE_PRODUCT_COMPLETE;
+}
+
+export class DeleteProductFailed implements Action{
+    readonly type=DELETE_PRODUCT_FAILED;
 }
 
 export type ProductType =
@@ -85,5 +97,7 @@ export type ProductType =
     StartUpdateProduct |
     SetCurrentProduct |
     UpdateProductComplete |
-    UpdateProductFailed
+    UpdateProductFailed |
+    DeleteProductComplete |
+    DeleteProductFailed
     ;

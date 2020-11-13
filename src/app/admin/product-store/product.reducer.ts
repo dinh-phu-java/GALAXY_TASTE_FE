@@ -27,13 +27,15 @@ export function productReducer(state = initialState, action: ProductAction.Produ
             }
         case ProductAction.ACTION_COMPLETE:
         case ProductAction.UPDATE_PRODUCT_FAILED:
+        case ProductAction.DELETE_PRODUCT_COMPLETE:
+        case ProductAction.DELETE_PRODUCT_FAILED:
             return {
                 ...state,
                 loading: false
             }
         case ProductAction.ACTION_FAILED:
         case ProductAction.GET_PRODUCT_LIST_FAILED:
-
+            
             return {
                 ...state,
                 loading: false,
@@ -58,6 +60,7 @@ export function productReducer(state = initialState, action: ProductAction.Produ
                 currentProduct: action.payload
             }
         case ProductAction.UPDATE_PRODUCT:
+        case ProductAction.DELETE_PRODUCT:
             return {
                 ...state,
                 loading: true
@@ -69,6 +72,7 @@ export function productReducer(state = initialState, action: ProductAction.Produ
                 currentProduct: null,
                 loading: false
             }
+
         default:
             return state;
     }

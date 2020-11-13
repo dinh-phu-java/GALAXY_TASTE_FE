@@ -66,8 +66,9 @@ export class ListProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  onDelete(position: number) {
-    console.log(position);
+  onDelete(productCode: string) {
+    this.store.dispatch(new ProductAction.DeleteProduct(productCode));
+    
   }
 
   searchProduct(searchInput: string) {
