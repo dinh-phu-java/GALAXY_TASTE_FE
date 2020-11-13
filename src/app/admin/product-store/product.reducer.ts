@@ -13,7 +13,7 @@ const initialState: State = {
     currentProduct: null,
     editProductCode: null,
     listProduct: null,
-    loading: false
+    loading: false,
 
 }
 
@@ -26,19 +26,17 @@ export function productReducer(state = initialState, action: ProductAction.Produ
                 loading: true
             }
         case ProductAction.ACTION_COMPLETE:
+        case ProductAction.UPDATE_PRODUCT_FAILED:
             return {
                 ...state,
-                loading: false,
-                imageFileName: null,
-                imageFiles: null
+                loading: false
             }
         case ProductAction.ACTION_FAILED:
         case ProductAction.GET_PRODUCT_LIST_FAILED:
+
             return {
                 ...state,
                 loading: false,
-                imageFileName: null,
-                imageFiles: null,
                 editProductCode: null,
                 currentProduct: null
             }
@@ -58,6 +56,18 @@ export function productReducer(state = initialState, action: ProductAction.Produ
             return {
                 ...state,
                 currentProduct: action.payload
+            }
+        case ProductAction.UPDATE_PRODUCT:
+            return {
+                ...state,
+                loading: true
+            }
+        case ProductAction.UPDATE_PRODUCT_COMPLETE:
+            return {
+                ...state,
+                editProductCode: null,
+                currentProduct: null,
+                loading: false
             }
         default:
             return state;

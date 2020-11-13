@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 export class EditProductComponent implements OnInit, OnDestroy {
 
   public editProduct: Product = new Product('', '', '', '', '', [], '', []);
-
+  public editProductCode:string;
   public createForm: FormGroup;
   public categories: Category[] = [];
   public maxImage: number = 5;
@@ -50,35 +50,36 @@ export class EditProductComponent implements OnInit, OnDestroy {
       productState => {
         this.isLoading = productState.loading;
         this.editProduct = productState.currentProduct;
-        console.log(this.editProduct);
+        this.editProductCode=productState.editProductCode;
         this.createForm = new FormGroup({
           'productName': new FormControl(this.editProduct.productName, Validators.required),
           'productPrice': new FormControl(this.editProduct.productPrice, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,4}){0,1}$')]),
           'tag': new FormControl(this.editProduct.tag, Validators.required),
           'description': new FormControl(this.editProduct.description, Validators.required),
-          'productImageUrl': new FormArray([
-            // new FormControl(null, [Validators.required, this.fileTypeAccepted.bind(this)])
-          ]),
+          'productImageUrl': new FormArray([]),
           'categoryId': new FormControl(null, Validators.required)
         })
         this.createForm.get('categoryId').setValue(this.editProduct.category.id, { onlySelf: true })
       })
 
-
   }
 
   createProduct() {
+    console.log(this.createForm) ;
     let product = new Product();
     product = this.createForm.value;
+    
+    
     product.imageFiles = this.imageFiles.slice();
     product.productImageUrl = this.imageFileName;
-    console.log(product);
+    // console.log(product);
     const formData = this.productService.createProductFormData(product);
-    this.store.dispatch(new ProductAction.CreateProduct(formData));
-    this.createForm.reset();
-    this.createForm.get('categoryId').setValue(1, { onlySelf: true });
-    this.imageFileName = []
-    this.imageFiles = []
+
+    this.store.dispatch(new ProductAction.UpdateProduct({newProductFormData:formData,productCode:this.editProductCode}));
+    // this.createForm.reset();
+    // this.createForm.get('categoryId').setValue(1, { onlySelf: true });
+    // this.imageFileName = []
+    // this.imageFiles = []
   }
 
   addImageControl() {

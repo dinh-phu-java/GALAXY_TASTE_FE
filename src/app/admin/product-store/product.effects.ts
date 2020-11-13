@@ -39,6 +39,42 @@ export class ProductEffects{
     )
 
     @Effect()
+    editProduct=this.actions.pipe(
+        ofType(ProductAction.UPDATE_PRODUCT),
+        switchMap((productData:ProductAction.UpdateProduct)=>{
+            return this.http
+            .put<Product>(`${this.host}/product/${productData.payload.productCode}`,productData.payload.newProductFormData)
+            .pipe(
+                map(resData=>{
+                    console.log(resData);
+                    
+                    return new ProductAction.UpdateProductComplete();
+                }),
+                catchError(errorRes=>{
+                    return of(new ProductAction.UpdateProductFailed());
+                })
+            )
+        })
+    )
+
+    @Effect({dispatch:false})
+    updateProductComplete=this.actions.pipe(
+        ofType(ProductAction.UPDATE_PRODUCT_COMPLETE),
+        tap(()=>{
+            this.notifier.notify(NotificationType.SUCCESS,`update product Complete`.toUpperCase());
+            this.router.navigate(['/admin/action']);
+        })
+    )
+
+    @Effect({dispatch:false})
+    updateProductFailed=this.actions.pipe(
+        ofType(ProductAction.UPDATE_PRODUCT_FAILED),
+        tap(()=>{
+            this.notifier.notify(NotificationType.ERROR,`Can't update Product. Please try Again`.toUpperCase());
+        })
+    )
+
+    @Effect()
     getProductList=this.actions.pipe(
         ofType(ProductAction.GET_PRODUCT_LIST),
         switchMap((productData:ProductAction.GetProductList)=>{
@@ -86,7 +122,7 @@ export class ProductEffects{
             return this.http.get<Product>(`${this.host}/product/${productCode.payload}`)
             .pipe(
                 map((resData:Product)=>{
-                    localStorage.setItem('editProduct',JSON.stringify(resData));
+                    
                     return new ProductAction.SetCurrentProduct(resData);
                 }),
                 catchError(errorRes=>{
