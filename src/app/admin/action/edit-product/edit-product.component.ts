@@ -12,14 +12,14 @@ import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { ProductService } from 'src/app/services/product.service';
 import { Subscription } from 'rxjs';
 
-
-
 @Component({
-  selector: 'app-create-product',
-  templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.scss']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.scss']
 })
-export class CreateProductComponent implements OnInit, OnDestroy {
+export class EditProductComponent implements OnInit, OnDestroy {
+
+  public editProduct: Product = new Product('', '', '', '', '', [], '', []);
 
   public createForm: FormGroup;
   public categories: Category[] = [];
@@ -41,25 +41,30 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
     this.categories = this.categoryService.getCategory();
     this.fileType = this.fileService.getFileType();
     this.maxFileSize = this.fileService.getFileSize();
 
-    this.createForm = new FormGroup({
-      'productName': new FormControl(null, Validators.required),
-      'productPrice': new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,4}){0,1}$')]),
-      'tag': new FormControl(null, Validators.required),
-      'description': new FormControl(null, Validators.required),
-      'productImageUrl': new FormArray([
-        new FormControl(null, [Validators.required, this.fileTypeAccepted.bind(this)])
-      ]),
-      'categoryId': new FormControl(null, Validators.required)
-    })
+    this.subscription = this.store.select('product').subscribe(
+      productState => {
+        this.isLoading = productState.loading;
+        this.editProduct = productState.currentProduct;
+        console.log(this.editProduct);
+        this.createForm = new FormGroup({
+          'productName': new FormControl(this.editProduct.productName, Validators.required),
+          'productPrice': new FormControl(this.editProduct.productPrice, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,4}){0,1}$')]),
+          'tag': new FormControl(this.editProduct.tag, Validators.required),
+          'description': new FormControl(this.editProduct.description, Validators.required),
+          'productImageUrl': new FormArray([
+            // new FormControl(null, [Validators.required, this.fileTypeAccepted.bind(this)])
+          ]),
+          'categoryId': new FormControl(null, Validators.required)
+        })
+        this.createForm.get('categoryId').setValue(this.editProduct.category.id, { onlySelf: true })
+      })
 
-    this.createForm.get('categoryId').setValue(1, { onlySelf: true });
-    this.subscription = this.store.select('product').subscribe(productState => {
-      this.isLoading = productState.loading;
-    })
+
   }
 
   createProduct() {
@@ -72,8 +77,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ProductAction.CreateProduct(formData));
     this.createForm.reset();
     this.createForm.get('categoryId').setValue(1, { onlySelf: true });
-    this.imageFileName=[]
-    this.imageFiles=[]
+    this.imageFileName = []
+    this.imageFiles = []
   }
 
   addImageControl() {
@@ -125,6 +130,5 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
 }
-
-

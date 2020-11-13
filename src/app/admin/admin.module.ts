@@ -11,9 +11,10 @@ import { CommonModule } from '@angular/common';
 import { ListProductComponent } from './action/list-product/list-product.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import { EditProductComponent } from './action/edit-product/edit-product.component';
 
 @NgModule({
-    declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent, ListProductComponent],
+    declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent, ListProductComponent, EditProductComponent],
     imports:[AdminRouting,
         ShareComponent,
         ReactiveFormsModule,

@@ -2,6 +2,7 @@ import { Action, UPDATE } from '@ngrx/store';
 import { Product } from 'src/app/model/product.model';
 
 export const CREATE_PRODUCT = '[Product] Create';
+export const START_UPDATE_PRODUCT='[Product] Start Update';
 export const UPDATE_PRODUCT = '[Product] Update';
 export const DELETE_PRODUCT = '[Product] Delete';
 export const GET_PRODUCT_LIST = '[Product] Get Product List';
@@ -10,6 +11,17 @@ export const ACTION_COMPLETE = '[Product] Complement';
 export const ACTION_FAILED = '[Product] Failed';
 export const GET_PRODUCT_LIST_COMPLETE='[Product] Get Product List Complete';
 export const GET_PRODUCT_LIST_FAILED='[Product] Get Product List Failed';
+export const SET_CURRENT_PRODUCT='[Product] Set Current Product';
+
+export class SetCurrentProduct implements Action{
+    readonly type=SET_CURRENT_PRODUCT;
+    constructor(public payload:Product){}
+}
+
+export class StartUpdateProduct implements Action{
+    readonly type=START_UPDATE_PRODUCT;
+    constructor(public payload:string){}
+}
 
 export class GetProductListComplete implements Action{
     readonly type=GET_PRODUCT_LIST_COMPLETE;
@@ -60,4 +72,6 @@ export type ProductType =
     ActionComplete |
     ActionFailed |
     GetProductListComplete |
-    GetProductListFailed;
+    GetProductListFailed|
+    StartUpdateProduct |
+    SetCurrentProduct;

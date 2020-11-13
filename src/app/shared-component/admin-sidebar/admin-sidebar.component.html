@@ -22,6 +22,15 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview">
+                    <a style="cursor: pointer;" class="nav-link" routerLinkActive="active" routerLink="/admin/action/list-product">
+                        
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            List Product
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item has-treeview">
                     <a style="cursor: pointer;" class="nav-link" routerLinkActive="active" routerLink="/admin/action/create-product">
@@ -32,15 +41,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview">
-                    <a style="cursor: pointer;" class="nav-link" routerLinkActive="active" routerLink="/admin/action/list-product">
-                        
-                        <i class="nav-icon fas fa-list"></i>
+                <!-- <li class="nav-item has-treeview">
+                    <a style="cursor: pointer;" class="nav-link" routerLinkActive="active" routerLink="/admin/action/edit-product">
+                        <i class="nav-icon far fa-edit"></i>
                         <p>
-                            List Product
+                            Edit Product
                         </p>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link" (click)="logout()">

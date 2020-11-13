@@ -3,8 +3,7 @@ import * as ProductAction from './product.actions';
 
 export interface State {
     currentProduct: Product;
-    currentProductCode: number;
-    editProductCode: number;
+    editProductCode: string;
     listProduct: Product[];
     loading: boolean;
 
@@ -12,7 +11,6 @@ export interface State {
 
 const initialState: State = {
     currentProduct: null,
-    currentProductCode: null,
     editProductCode: null,
     listProduct: null,
     loading: false
@@ -38,7 +36,11 @@ export function productReducer(state = initialState, action: ProductAction.Produ
         case ProductAction.GET_PRODUCT_LIST_FAILED:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                imageFileName: null,
+                imageFiles: null,
+                editProductCode: null,
+                currentProduct: null
             }
 
         case ProductAction.GET_PRODUCT_LIST_COMPLETE:
@@ -46,6 +48,16 @@ export function productReducer(state = initialState, action: ProductAction.Produ
                 ...state,
                 listProduct: action.payload,
                 loading: false
+            }
+        case ProductAction.START_UPDATE_PRODUCT:
+            return {
+                ...state,
+                editProductCode: action.payload
+            }
+        case ProductAction.SET_CURRENT_PRODUCT:
+            return {
+                ...state,
+                currentProduct: action.payload
             }
         default:
             return state;

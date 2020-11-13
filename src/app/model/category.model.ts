@@ -1,3 +1,3 @@
 export class Category{
-    constructor(public categoryId:number,public categoryName:string){}
+    constructor(public id:number,public categoryName:string){}
 }

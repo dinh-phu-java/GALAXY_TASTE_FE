@@ -9,26 +9,24 @@
           <div class="input-group-prepend">
             <div class="input-group-text"><i class="fas fa-search"></i></div>
           </div>
-          
-            <input 
-            type="search" 
-            class="form-control"
-             name="searchProduct" 
-             #searchInput="ngModel" 
-             id="searchform" 
-             placeholder="Search..." 
-             ngModel 
-             (ngModelChange)="searchProduct(searchInput.value)">
-            
+
+          <input type="search" class="form-control" name="searchProduct" #searchInput="ngModel" id="searchform"
+            placeholder="Search..." ngModel (ngModelChange)="searchProduct(searchInput.value)">
+
         </div>
       </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>
 
+
+
 <section class="content">
   <div class="container-fluid">
-    <div class="row">
+    <div class="text-center">
+      <app-css-spinner *ngIf="spinner"></app-css-spinner>
+    </div>
+    <div class="row" *ngIf="!spinner">
       <!-- left column -->
       <div class="col-md-12">
         <!-- jquery validation -->

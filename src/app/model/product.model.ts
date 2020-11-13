@@ -1,3 +1,5 @@
+import { Category } from './category.model';
+
 export class Product{
     constructor(
         public productCode?:string,
@@ -7,7 +9,8 @@ export class Product{
         public description?:string,
         public productImageUrl?:string[],
         public categoryId?:string,
-        public imageFiles?:File[]){}
+        public imageFiles?:File[],
+        public category?:Category){}
 
         
 }

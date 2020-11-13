@@ -78,4 +78,22 @@ export class ProductEffects{
             this.notifier.notify(NotificationType.ERROR,`Can't get list product! Please try again`.toUpperCase());
         })
     )
+
+    @Effect()
+    startUpdateProduct= this.actions.pipe(
+        ofType(ProductAction.START_UPDATE_PRODUCT),
+        switchMap((productCode:ProductAction.StartUpdateProduct)=>{
+            return this.http.get<Product>(`${this.host}/product/${productCode.payload}`)
+            .pipe(
+                map((resData:Product)=>{
+                    localStorage.setItem('editProduct',JSON.stringify(resData));
+                    return new ProductAction.SetCurrentProduct(resData);
+                }),
+                catchError(errorRes=>{
+                    
+                    return of(new ProductAction.ActionFailed());
+                })
+            )
+        })
+    )
 }

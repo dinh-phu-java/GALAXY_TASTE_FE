@@ -11,6 +11,7 @@ import { AdminFooterComponent } from './admin-footer/admin-footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import { RouterModule } from '@angular/router';
+import { CssSpinnerComponent } from './css-spinner/css-spinner.component';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { RouterModule } from '@angular/router';
         HomeCarouselComponent, 
         WeeklyFeatureComponent, 
         BestSellingProductComponent, 
-        FeatureComponent, SuggestComponent, LoginComponent,AdminNavbarComponent,AdminSidebarComponent,AdminFooterComponent
+        FeatureComponent, SuggestComponent, LoginComponent,AdminNavbarComponent,AdminSidebarComponent,AdminFooterComponent, CssSpinnerComponent
     ],
     imports:[
         ReactiveFormsModule,
@@ -33,7 +34,8 @@ import { RouterModule } from '@angular/router';
         BestSellingProductComponent,
         FeatureComponent,
         SuggestComponent,
-        LoginComponent,AdminNavbarComponent,AdminSidebarComponent,AdminFooterComponent
+        LoginComponent,AdminNavbarComponent,AdminSidebarComponent,AdminFooterComponent,
+        CssSpinnerComponent
     ]
 })
 export class ShareComponent{

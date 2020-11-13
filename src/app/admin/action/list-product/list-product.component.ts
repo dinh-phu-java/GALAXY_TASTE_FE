@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import * as AppStore from 'src/app/store/app.store';
 import * as ProductAction from 'src/app/admin/product-store/product.actions';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
@@ -18,22 +18,26 @@ export class ListProductComponent implements OnInit, AfterViewInit, OnDestroy {
   public products: Product[] = [];
 
   public displayedColumns: string[] = ['productCode', 'productName', 'productPrice', 'tag', 'edit', 'delete'];
-  public subscription: Subscription;
+  public subscription: Subscription[]=[];
   public dataSource: any;
+  public spinner: boolean = false;
+
   constructor(
     private store: Store<AppStore.AppState>,
-    private route: ActivatedRoute,
+    private router: Router,
     private notifier: NotificationService
   ) { }
 
   ngOnInit(): void {
     this.store.dispatch(new ProductAction.GetProductList());
-    this.subscription = this.store.select('product').subscribe(
-      (productState => {
-        this.products = productState.listProduct;
-        this.dataSource = new MatTableDataSource<Product>(this.products);
-        this.dataSource.paginator = this.paginator;
-      })
+    this.subscription.push(
+      this.store.select('product').subscribe(
+        (productState => {
+          this.products = productState.listProduct;
+          this.dataSource = new MatTableDataSource<Product>(this.products);
+          this.dataSource.paginator = this.paginator;
+        })
+      )
     )
 
   }
@@ -44,20 +48,26 @@ export class ListProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  onEdit(position: number) {
-    console.log(position);
+  onEdit(productCode: string) {
+
+    this.store.dispatch(new ProductAction.StartUpdateProduct(productCode));
+    this.subscription.push(
+      this.store.select('product').subscribe(
+        productState => {
+          if (productState.currentProduct) {
+            this.router.navigate([`/admin/action/edit-product/${productCode}`]);
+            this.spinner = false;
+          } else {
+            this.spinner = true;
+          }
+        }
+      )
+    )
+
   }
 
   onDelete(position: number) {
     console.log(position);
-  }
-
-  onChangeList() {
-    // ELEMENT_DATA = [
-    //   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    //   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' }
-    // ]
-    // this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   }
 
   searchProduct(searchInput: string) {
@@ -70,18 +80,20 @@ export class ListProductComponent implements OnInit, AfterViewInit, OnDestroy {
         results.push(product);
       }
     }
-    
+
     if (results.length === 0 || !searchInput) {
       this.dataSource = new MatTableDataSource<Product>(this.products);
-      this.dataSource.paginator = this.paginator;  
+      this.dataSource.paginator = this.paginator;
     }
     this.dataSource = new MatTableDataSource<Product>(results);
     this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    for(let sub of this.subscription){
+      if(sub){
+        sub.unsubscribe();
+      }
     }
   }
 
