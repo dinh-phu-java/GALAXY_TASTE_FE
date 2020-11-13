@@ -7,6 +7,7 @@ export interface State {
     editProductCode: number;
     listProduct: Product[];
     loading: boolean;
+
 }
 
 const initialState: State = {
@@ -15,11 +16,13 @@ const initialState: State = {
     editProductCode: null,
     listProduct: null,
     loading: false
+
 }
 
 export function productReducer(state = initialState, action: ProductAction.ProductType) {
     switch (action.type) {
         case ProductAction.CREATE_PRODUCT:
+        case ProductAction.GET_PRODUCT_LIST:
             return {
                 ...state,
                 loading: true
@@ -27,11 +30,21 @@ export function productReducer(state = initialState, action: ProductAction.Produ
         case ProductAction.ACTION_COMPLETE:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                imageFileName: null,
+                imageFiles: null
             }
         case ProductAction.ACTION_FAILED:
+        case ProductAction.GET_PRODUCT_LIST_FAILED:
             return {
                 ...state,
+                loading: false
+            }
+
+        case ProductAction.GET_PRODUCT_LIST_COMPLETE:
+            return {
+                ...state,
+                listProduct: action.payload,
                 loading: false
             }
         default:

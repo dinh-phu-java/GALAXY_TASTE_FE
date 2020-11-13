@@ -1,0 +1,101 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-8">
+        <h1>Products List</h1>
+      </div>
+      <div class="col-sm-4 float-sm-right">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-search"></i></div>
+          </div>
+          
+            <input 
+            type="search" 
+            class="form-control"
+             name="searchProduct" 
+             #searchInput="ngModel" 
+             id="searchform" 
+             placeholder="Search..." 
+             ngModel 
+             (ngModelChange)="searchProduct(searchInput.value)">
+            
+        </div>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- jquery validation -->
+        <div class="card card-primary">
+          <!-- <div class="card-header">
+            <h3 class="card-title">List Products </h3>
+            <div class="mr-auto"><button class="btn btn-primary" (click)="onChangeList()"> change List</button></div>
+          </div> -->
+          <!-- /.card-header -->
+          <!-- form start -->
+          <div class="container">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="productCode">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.productCode}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="productName">
+                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="productPrice">
+                  <th mat-header-cell *matHeaderCellDef> Price </th>
+                  <td mat-cell *matCellDef="let element"> {{element.productPrice}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="tag">
+                  <th mat-header-cell *matHeaderCellDef> Tag </th>
+                  <td mat-cell *matCellDef="let element"> {{element.tag}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="edit">
+                  <th mat-header-cell *matHeaderCellDef> Edit </th>
+                  <td mat-cell *matCellDef="let element" style="cursor:pointer"> <button class="btn btn-info"
+                      (click)="onEdit(element.productCode)">Edit</button> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef> Delete </th>
+                  <td mat-cell *matCellDef="let element"> <button class="btn btn-danger"
+                      (click)="onDelete(element.productCode)">Delete</button> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+      <!-- right column -->
+      <div class="col-md-6">
+
+      </div>
+      <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>

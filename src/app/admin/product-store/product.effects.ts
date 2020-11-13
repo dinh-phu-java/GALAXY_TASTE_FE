@@ -12,7 +12,11 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ProductEffects{
     private host= environment.apiUrl;
-    constructor(private actions:Actions,private http:HttpClient,private notifier:NotificationService){}
+    constructor(
+        private actions:Actions,
+        private http:HttpClient,
+        private notifier:NotificationService,
+        private router:Router){}
 
     @Effect()
     createProduct= this.actions.pipe(
@@ -23,6 +27,7 @@ export class ProductEffects{
             .pipe(
                 map((resData:Product)=>{
                     console.log(resData);
+                    
                     return new ProductAction.ActionComplete();
                 }),
                 catchError(errorRes=>{
@@ -33,12 +38,44 @@ export class ProductEffects{
         })
     )
 
+    @Effect()
+    getProductList=this.actions.pipe(
+        ofType(ProductAction.GET_PRODUCT_LIST),
+        switchMap((productData:ProductAction.GetProductList)=>{
+            return this.http.get<Product[]>(`${this.host}/product/list`)
+            .pipe(
+                map((resData:Product[])=>{
+                    
+                    return new ProductAction.GetProductListComplete(resData);
+                }),
+                catchError(errorRes=>{
+                    console.log(errorRes)
+                    return of(new ProductAction.GetProductListFailed());
+                })
+            )
+        })
+    )
+
     @Effect({dispatch:false})
     actionComplete=this.actions.pipe(
         ofType(ProductAction.ACTION_COMPLETE),
         tap(()=>{
             this.notifier.notify(NotificationType.SUCCESS,`Upload file Complete`.toUpperCase());
-            
+        })
+    )
+    @Effect({dispatch:false})
+    getProductListComplete=this.actions.pipe(
+        ofType(ProductAction.GET_PRODUCT_LIST_COMPLETE),
+        tap(()=>{
+            this.notifier.notify(NotificationType.SUCCESS,`Get Product List Complete`.toUpperCase());
+        })
+    )
+
+    @Effect({dispatch:false})
+    getProductListFailed=this.actions.pipe(
+        ofType(ProductAction.GET_PRODUCT_LIST_FAILED),
+        tap(()=>{
+            this.notifier.notify(NotificationType.ERROR,`Can't get list product! Please try again`.toUpperCase());
         })
     )
 }

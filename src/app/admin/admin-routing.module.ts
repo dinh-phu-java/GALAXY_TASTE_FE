@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProductResolver } from '../services/product.resolver';
 import { ActionComponent } from './action/action.component';
 import { CreateProductComponent } from './action/create-product/create-product.component';
+import { ListProductComponent } from './action/list-product/list-product.component';
 import { StartComponent } from './action/start/start.component';
 import { AdminGuard } from './admin-guard.service';
 import { AdminComponent } from './admin.component';
@@ -11,7 +13,8 @@ const routes: Routes = [
     {
         path: 'action', component: ActionComponent, canActivateChild: [AdminGuard], children: [
             { path: '', component: StartComponent },
-            { path: 'create-product', component: CreateProductComponent }
+            { path: 'create-product', component: CreateProductComponent },
+            { path: 'list-product', component: ListProductComponent }
         ]
     }
 ]

@@ -6,15 +6,26 @@ export const UPDATE_PRODUCT = '[Product] Update';
 export const DELETE_PRODUCT = '[Product] Delete';
 export const GET_PRODUCT_LIST = '[Product] Get Product List';
 export const GET_PRODUCT = '[Product] Get Product';
-export const ACTION_COMPLETE ='[Product] Complement';
-export const ACTION_FAILED= '[Product] Failed';
+export const ACTION_COMPLETE = '[Product] Complement';
+export const ACTION_FAILED = '[Product] Failed';
+export const GET_PRODUCT_LIST_COMPLETE='[Product] Get Product List Complete';
+export const GET_PRODUCT_LIST_FAILED='[Product] Get Product List Failed';
 
-export class ActionFailed implements Action{
-    readonly type=ACTION_FAILED;
+export class GetProductListComplete implements Action{
+    readonly type=GET_PRODUCT_LIST_COMPLETE;
+    constructor(public payload:Product[]){}
 }
 
-export class ActionComplete implements Action{
-    readonly type=ACTION_COMPLETE;
+export class GetProductListFailed implements Action{
+    readonly type=GET_PRODUCT_LIST_FAILED;
+}
+
+export class ActionFailed implements Action {
+    readonly type = ACTION_FAILED;
+}
+
+export class ActionComplete implements Action {
+    readonly type = ACTION_COMPLETE;
 }
 export class CreateProduct implements Action {
     readonly type = CREATE_PRODUCT;
@@ -40,4 +51,13 @@ export class GetProduct implements Action {
     constructor(public payload: number) { }
 }
 
-export type ProductType = CreateProduct | UpdateProduct | DeleteProduct | GetProductList | GetProduct | ActionComplete | ActionFailed;
+export type ProductType =
+    CreateProduct |
+    UpdateProduct |
+    DeleteProduct |
+    GetProductList |
+    GetProduct |
+    ActionComplete |
+    ActionFailed |
+    GetProductListComplete |
+    GetProductListFailed;

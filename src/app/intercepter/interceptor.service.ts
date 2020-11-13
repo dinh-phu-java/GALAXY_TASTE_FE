@@ -23,7 +23,7 @@ export class RequestIntercept implements HttpInterceptor, OnDestroy {
                 token = authData.token;
             })
         )
-        console.log(token);
+        
         const httpRequest = request.clone({ setHeaders: { Authorization: `Galaxy ${token}` } });
         return next.handle(httpRequest);
     }

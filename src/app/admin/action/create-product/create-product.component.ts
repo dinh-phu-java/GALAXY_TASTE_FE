@@ -13,6 +13,7 @@ import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from 'src/app/services/product.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -71,6 +72,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     console.log(product);
     const formData = this.productService.createProductFormData(product);
     this.store.dispatch(new ProductAction.CreateProduct(formData));
+    this.createForm.reset();
+    this.createForm.get('categoryId').setValue(1, { onlySelf: true });
+    this.imageFileName=[]
+    this.imageFiles=[]
   }
 
   addImageControl() {

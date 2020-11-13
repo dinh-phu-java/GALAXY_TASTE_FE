@@ -6,13 +6,22 @@ import { ShareComponent } from '../shared-component/shared-component.module';
 import { ActionComponent } from './action/action.component';
 import { StartComponent } from './action/start/start.component';
 import { CreateProductComponent } from './action/create-product/create-product.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { ListProductComponent } from './action/list-product/list-product.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
-    declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent],
-    imports:[AdminRouting,ShareComponent,ReactiveFormsModule,CommonModule],
+    declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent, ListProductComponent],
+    imports:[AdminRouting,
+        ShareComponent,
+        ReactiveFormsModule,
+        CommonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        FormsModule
+    ],
     exports:[AdminComponent]
 })
 

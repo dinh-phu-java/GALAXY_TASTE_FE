@@ -11,6 +11,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './services/auth-store/auth.effects';
 import { ProductEffects } from './admin/product-store/product.effects';
 import { RequestIntercept } from './intercepter/interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProductResolver } from './services/product.resolver';
 
 @NgModule({
   declarations: [
@@ -22,14 +24,16 @@ import { RequestIntercept } from './intercepter/interceptor.service';
     HttpClientModule,
     NotificationModule,
     StoreModule.forRoot(AppStore.appReducer),
-    EffectsModule.forRoot([AuthEffects,ProductEffects])
+    EffectsModule.forRoot([AuthEffects,ProductEffects]),
+    BrowserAnimationsModule
   ],
   providers: [
     {
       provide:HTTP_INTERCEPTORS,
       useClass:RequestIntercept,
       multi:true
-    }
+    },
+    ProductResolver
   ],
   bootstrap: [AppComponent]
 })
