@@ -17,6 +17,9 @@ export class RequestIntercept implements HttpInterceptor, OnDestroy {
         if (request.url.includes(`${this.authService.host}/user/login`)) {
             return next.handle(request);
         }
+        if (request.url.includes(`${this.authService.host}/user/register`)) {
+            return next.handle(request);
+        }
         let token: string;
         this.subscription = this.store.select('auth').subscribe(
             (authData => {

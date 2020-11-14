@@ -13,6 +13,8 @@ import { ProductEffects } from './admin/product-store/product.effects';
 import { RequestIntercept } from './intercepter/interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductResolver } from './services/product.resolver';
+import { UserComponent } from './user/user.component';
+import { UserEffects } from './user/user-store/user.effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { ProductResolver } from './services/product.resolver';
     HttpClientModule,
     NotificationModule,
     StoreModule.forRoot(AppStore.appReducer),
-    EffectsModule.forRoot([AuthEffects,ProductEffects]),
+    EffectsModule.forRoot([AuthEffects,ProductEffects,UserEffects]),
     BrowserAnimationsModule
   ],
   providers: [

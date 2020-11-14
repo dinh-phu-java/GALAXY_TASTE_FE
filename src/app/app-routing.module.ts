@@ -7,6 +7,7 @@ const appRoutes: Routes = [
     // { path: 'admin', loadChildren: './admin/admin.module#AdminModule' }
     { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+    { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) }
 ]
 
 @NgModule({

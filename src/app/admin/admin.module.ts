@@ -15,7 +15,8 @@ import { EditProductComponent } from './action/edit-product/edit-product.compone
 
 @NgModule({
     declarations:[AdminComponent, ActionComponent, StartComponent, CreateProductComponent, ListProductComponent, EditProductComponent],
-    imports:[AdminRouting,
+    imports:[
+        AdminRouting,
         ShareComponent,
         ReactiveFormsModule,
         CommonModule,

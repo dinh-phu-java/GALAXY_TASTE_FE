@@ -1,0 +1,182 @@
+<div class="container">
+
+    <div class="omb_login">
+        <h3 class="omb_authTitle">Login or <a href="#">Sign up</a></h3>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
+                    <!-- <i class="fa fa-facebook"></i> -->
+                    <i class="fab fa-facebook-f"></i>
+                    <span class="ml-1 d-none d-lg-inline-block">Facebook</span>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="btn btn-lg btn-block omb_btn-twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span class="ml-1 d-none d-lg-inline-block">Twitter</span>
+                </a>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <a href="#" class="btn btn-lg btn-block omb_btn-google">
+                    <i class="fab fa-google-plus-g"></i>
+                    <span class="ml-1 d-none d-lg-inline-block">Google+</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row omb_row-sm-offset-3 omb_loginOr">
+            <div class="col-xs-12 col-sm-6">
+                <hr class="omb_hrOr">
+                <span class="omb_spanOr">or</span>
+            </div>
+        </div>
+
+        <div class="row omb_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-6">
+                <form class="omb_loginForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <!-- email -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fas fa-envelope-square"></i></span>
+                        </div>
+                        <input type="email" class="form-control" formControlName="email" placeholder="Email"
+                            aria-label="Email" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- <div class="mb-3" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
+                        <span class="help-block">
+                            <span *ngIf="registerForm.get('email').errors['required']">Email is required!</span>
+                            <span *ngIf="registerForm.get('email').errors['email']">Email is not correct!</span>
+                        </span>
+                    </div> -->
+                    <!-- first name -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="firstName" placeholder="First Name"
+                            aria-label="firstName" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- <div class="mb-3"
+                        *ngIf="!registerForm.get('firstName').valid && registerForm.get('firstName').touched">
+                        <span class="help-block">
+                            <span *ngIf="registerForm.get('firstName').errors['required']">First name is
+                                required!</span>
+
+                        </span>
+                    </div> -->
+                    <!-- last name -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i
+                                    class="fas fa-file-signature"></i></span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name"
+                            aria-label="lastName" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- <div class="mb-3"
+                        *ngIf="!registerForm.get('lastName').valid && registerForm.get('lastName').touched">
+                        <span class="help-block">
+                            <span *ngIf="registerForm.get('lastName').errors['required']">Last name is required!</span>
+
+                        </span>
+                    </div> -->
+                    <!-- username  -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="username" placeholder="User Name"
+                            aria-label="username" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- <div class="mb-3"
+                        *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched">
+                        <span class="help-block">
+                            <span *ngIf="registerForm.get('username').errors['required']">Username is required!</span>
+                        </span>
+                    </div> -->
+                    <div formGroupName="passwords">
+                        <!-- password -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <input type="password" class="form-control" id="password" formControlName="password"
+                                placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="mb-3"
+                            *ngIf="!registerForm.get('passwords').get('password').valid && registerForm.get('passwords').get('password').touched">
+                            <span class="help-block">
+                                <span *ngIf="registerForm.get('passwords').get('password').errors['required']">Password
+                                    is
+                                    required</span>
+                                <span *ngIf="registerForm.get('passwords').get('password').errors['pattern']">Password
+                                    must be at least 6
+                                    charaters long</span>
+                            </span>
+                        </div>
+                        <!-- confirm password -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-lock"></i></span>
+                            </div>
+                            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                                placeholder="Confirm Password" aria-label="Password" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="mb-3"
+                            *ngIf="!registerForm.get('passwords').get('confirmPassword').valid && registerForm.get('passwords').get('confirmPassword').touched">
+                            <span class="help-block">
+                                <span
+                                    *ngIf="registerForm.get('passwords').get('confirmPassword').errors['required']">Confirm
+                                    password is
+                                    required</span>
+                                <span
+                                    *ngIf="registerForm.get('passwords').get('confirmPassword').errors['pattern']">Confirm
+                                    password
+                                    must be at least 6
+                                    charaters long</span>
+                            </span>
+                            <!-- <div *ngIf="registerForm.get('passwords').get('confirmPassword').value !== null">
+                                <div class="help-block"
+                                    *ngIf="registerForm.get(['passwords','password']).value != registerForm.get(['passwords','confirm_password']).value && registerForm.get(['passwords','confirm_password']).value != null">
+                                    Password does not match</div>
+                            </div> -->
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="registerForm.invalid"><i
+                            class="fas fa-spinner fa-spin" *ngIf="isLoading"></i> Register</button>
+                </form>
+            </div>
+        </div>
+        <div class="row omb_row-sm-offset-3 mt-2">
+            <div class="col-xs-12 col-sm-3">
+
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <p class="omb_forgotPwd">
+                    <a href="#">Forgot password?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h3>Form Status</h3>
+<b>valid : </b>{{registerForm.valid}}
+<b>invalid : </b>{{registerForm.invalid}}
+<b>touched : </b>{{registerForm.touched}}
+<b>untouched : </b>{{registerForm.untouched}}
+<b>pristine : </b>{{registerForm.pristine}}
+<b>dirty : </b>{{registerForm.dirty}}
+<b>disabled : </b>{{registerForm.disabled}}
+<b>enabled : </b>{{registerForm.enabled}}
+
+<h3>Form Value</h3>
+{{registerForm.value |json}}

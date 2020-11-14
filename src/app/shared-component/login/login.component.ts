@@ -1,16 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
-
 import { NotificationType } from 'src/app/enum/notification-type.enum';
-
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import * as AppStore from '../../store/app.store';
 import * as AuthActions from '../../services/auth-store/auth.actions';
 import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
