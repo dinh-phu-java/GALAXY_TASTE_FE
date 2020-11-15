@@ -31,7 +31,12 @@ export class UserLoginComponent implements OnInit {
 
     this.subscription=this.store.select('user').subscribe(stateData=>{
       this.isLoading=stateData.loading;
+      this.isLoggedIn=stateData.isLoggedIn;
     });
+
+    if(this.isLoggedIn){
+      this.router.navigate(['/home']);
+    }
 
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),

@@ -42,7 +42,8 @@
                 </li>
             </ul>
             <div class="my-2 my-lg-0 cart-icon">
-                <a class="cart-icon__login">Login</a>
+                <a class="cart-icon__login" routerLink="/user/login" *ngIf="!isLoggedIn">Login</a>
+                <a class="cart-icon__login" routerLink="/user/login" *ngIf="isLoggedIn">Profile</a>
                 <span class="cart-icon__vertical d-none d-lg-inline-block">&#124;</span>
                 <a class="cart-icon__detail d-none d-lg-inline-block">
                     <i class="fas fa-shopping-cart"></i>

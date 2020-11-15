@@ -9,6 +9,7 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { CheckoutComponent } from './user-cart/checkout/checkout.component';
 import { CartComponent } from './user-cart/cart/cart.component';
+import { UserProgileComponent } from './user-progile/user-progile.component';
 
 @NgModule({
     declarations:[
@@ -18,6 +19,7 @@ import { CartComponent } from './user-cart/cart/cart.component';
         UserCartComponent,
         CheckoutComponent,
         CartComponent
+        
     ],
     imports:[
         UserRouting,

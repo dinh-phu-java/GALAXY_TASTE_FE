@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import * as AppStore from 'src/app/store/app.store';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -8,13 +10,20 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   navHeight: number;
   navElement: HTMLElement;
-  constructor() { }
+  isLoggedIn: boolean = false;
+  subscription:Subscription;
+  constructor(private store: Store<AppStore.AppState>) { }
 
   ngOnInit(): void {
     this.navElement = document.getElementById("mainNavbar");
 
     this.navHeight = +this.navElement.offsetHeight;
 
+    
+    this.subscription=this.store.select('user').subscribe((stateData)=>{
+      this.isLoggedIn=stateData.isLoggedIn;
+    })
+    
   }
 
   onScroll(event: Event) {

@@ -5,12 +5,14 @@ export interface State {
     loading: boolean;
     registerUser: User;
     loginUser:User;
+    isLoggedIn:boolean;
 }
 
 const initialState: State = {
     loading: false,
     registerUser: null,
-    loginUser:null
+    loginUser:null,
+    isLoggedIn:false
 }
 
 export function userReducer(state = initialState, action: UserActions.RegisterType) {
@@ -35,13 +37,15 @@ export function userReducer(state = initialState, action: UserActions.RegisterTy
         case UserActions.LOGIN_COMPLETE:
             return {
                 ...state,
-                loading:false
+                loading:false,
+                isLoggedIn:true
             }
         case UserActions.LOGIN_FAILED:
             return {
                 ...state,
                 loading: false,
-                loginUser:null
+                loginUser:null,
+                isLoggedIn:false
             }
         case UserActions.START_LOGIN:
             return {

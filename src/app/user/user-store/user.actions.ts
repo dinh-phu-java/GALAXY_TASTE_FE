@@ -8,6 +8,11 @@ export const REGISTER_FAILED = '[User] Register Failed';
 export const START_LOGIN = '[User] Start Login';
 export const LOGIN_COMPLETE = '[User] Login Complete';
 export const LOGIN_FAILED = '[User] Login Failed';
+export const AUTO_LOGIN= '[User] Auto Login';
+
+export class AutoLogin implements Action{
+    readonly type=AUTO_LOGIN;
+}
 
 export class StartLogin implements Action {
     readonly type = START_LOGIN;
@@ -31,6 +36,7 @@ export class StartRegister implements Action {
 
 export class RegisterComplete implements Action {
     readonly type = REGISTER_COMPLETE;
+    constructor(public payload:User){}
 }
 
 export class RegisterFailed implements Action {
@@ -43,4 +49,5 @@ export type RegisterType =
     RegisterFailed |
     LoginComplete |
     StartLogin |
-    LoginFailed;
+    LoginFailed |
+    AutoLogin;

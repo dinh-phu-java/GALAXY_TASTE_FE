@@ -15,6 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductResolver } from './services/product.resolver';
 import { UserComponent } from './user/user.component';
 import { UserEffects } from './user/user-store/user.effects';
+import { CommonModule } from '@angular/common';
+import { NavbarComponent } from './layout/navbar/navbar.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { UserEffects } from './user/user-store/user.effects';
     NotificationModule,
     StoreModule.forRoot(AppStore.appReducer),
     EffectsModule.forRoot([AuthEffects,ProductEffects,UserEffects]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CommonModule
   ],
   providers: [
     {

@@ -32,7 +32,8 @@ export class UserEffects {
                     map(resData => {
                         console.log(resData);
                         this.notifier.notify(NotificationType.SUCCESS, `register user complete`.toUpperCase());
-                        return new UserActions.RegisterComplete();
+                        const user:User =(<User>resData)
+                        return new UserActions.RegisterComplete(user);
                     }),
                     catchError(errorRes => {
                         console.log(errorRes);
@@ -43,11 +44,27 @@ export class UserEffects {
         })
     )
 
-    @Effect({ dispatch: false })
+    @Effect()
     registerComplete = this.actions.pipe(
         ofType(UserActions.REGISTER_COMPLETE),
-        tap(() => {
+        map((registerData:UserActions.RegisterComplete) => {
+           return new UserActions.StartLogin(registerData.payload);
+        })
+    )
 
+    @Effect()
+    autoLogin=this.actions.pipe(
+        ofType(UserActions.AUTO_LOGIN),
+        map(()=>{
+            this.authService.loadToken();
+            const token= this.authService.getToken();
+            const user:User=(<User>this.authService.getUserFormLocalCache());
+            
+            if(this.authService.isUserLoggedIn()){
+                return new UserActions.LoginComplete({user:user,token:token});
+            }else{
+                return {type :'Dummy'}
+            }
         })
     )
 
