@@ -20,12 +20,12 @@ export class RequestIntercept implements HttpInterceptor, OnDestroy {
         if (request.url.includes(`${this.authService.host}/user/register`)) {
             return next.handle(request);
         }
-        let token: string;
-        this.subscription = this.store.select('auth').subscribe(
-            (authData => {
-                token = authData.token;
-            })
-        )
+        let token: string=localStorage.getItem('token');
+        // this.subscription = this.store.select('auth').subscribe(
+        //     (authData => {
+        //         token = authData.token;
+        //     })
+        // )
         
         const httpRequest = request.clone({ setHeaders: { Authorization: `Galaxy ${token}` } });
         return next.handle(httpRequest);

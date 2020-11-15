@@ -11,11 +11,7 @@ export class WeeklyFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     
-    (function($){
-      $(document).ready(()=>{
-        console.log("test jquery");
-      })
-    })(jQuery)
+    
   }
 
 }

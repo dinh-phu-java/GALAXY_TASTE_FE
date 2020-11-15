@@ -74,18 +74,6 @@ export class UserRegisterComponent implements OnInit, OnDestroy {
 
     });
 
-    // this.registerForm = new FormGroup({
-    // 'email': new FormControl(null, [Validators.required, Validators.email]),
-    // 'firstName': new FormControl(null, [Validators.required]),
-    // 'lastName': new FormControl(null, [Validators.required]),
-    // 'username': new FormControl(null, [Validators.required]),
-    // 'passwords': new FormGroup({
-    //   'password': new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-Z0-9]{6,}$")]),
-    //   'confirmPassword': new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-Z0-9]{6,}$")])
-    // })
-    // })
-
-
 
   }
 
