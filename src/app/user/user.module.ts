@@ -9,7 +9,15 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { CheckoutComponent } from './user-cart/checkout/checkout.component';
 import { CartComponent } from './user-cart/cart/cart.component';
-import { UserProgileComponent } from './user-progile/user-progile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NavbarComponent } from '../layout/navbar/navbar.component';
+import { HomeModule } from '../home/home.module';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 @NgModule({
     declarations:[
@@ -18,15 +26,38 @@ import { UserProgileComponent } from './user-progile/user-progile.component';
         UserRegisterComponent,
         UserCartComponent,
         CheckoutComponent,
-        CartComponent
-        
+        CartComponent,
+        UserProfileComponent,
+        SocialLoginComponent
+    ],
+    providers:[
+        {
+            provide: 'SocialAuthServiceConfig',
+            useValue: {
+              autoLogin: false,
+              providers: [
+                {
+                  id: GoogleLoginProvider.PROVIDER_ID,
+                  provider: new GoogleLoginProvider(
+                    '451451600267-psdp1uqhca32972vnd2ldsmfg5lt9nep.apps.googleusercontent.com'
+                  )
+                },
+                {
+                  id: FacebookLoginProvider.PROVIDER_ID,
+                  provider: new FacebookLoginProvider('clientId')
+                }
+              ]
+            } as SocialAuthServiceConfig,
+          }
     ],
     imports:[
         UserRouting,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        ShareComponent
+        ShareComponent,
+        HomeModule,
+        SocialLoginModule
     ],
     exports:[UserComponent]
 })

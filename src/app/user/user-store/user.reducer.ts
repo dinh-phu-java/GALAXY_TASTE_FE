@@ -1,3 +1,4 @@
+import { ActionComponent } from 'src/app/admin/action/action.component';
 import { User } from 'src/app/model/user.model';
 import * as UserActions from './user.actions';
 
@@ -38,7 +39,8 @@ export function userReducer(state = initialState, action: UserActions.RegisterTy
             return {
                 ...state,
                 loading:false,
-                isLoggedIn:true
+                isLoggedIn:true,
+                loginUser:action.payload.user
             }
         case UserActions.LOGIN_FAILED:
             return {

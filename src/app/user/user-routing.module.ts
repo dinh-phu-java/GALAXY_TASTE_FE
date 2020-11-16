@@ -4,6 +4,7 @@ import { CartComponent } from './user-cart/cart/cart.component';
 import { CheckoutComponent } from './user-cart/checkout/checkout.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserComponent } from './user.component';
 
@@ -11,6 +12,9 @@ const userRoutes: Routes = [
     { path: '', redirectTo: '/user/login', pathMatch: 'full' },
     { path: 'login', component: UserLoginComponent },
     { path: 'register', component: UserRegisterComponent },
+    {
+        path: 'profile', component: UserProfileComponent
+    },
     {
         path: 'cart', component: UserCartComponent, children: [
             { path: '', component: CartComponent },

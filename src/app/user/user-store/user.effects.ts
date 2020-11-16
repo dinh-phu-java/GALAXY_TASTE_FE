@@ -59,7 +59,6 @@ export class UserEffects {
             this.authService.loadToken();
             const token= this.authService.getToken();
             const user:User=(<User>this.authService.getUserFormLocalCache());
-            
             if(this.authService.isUserLoggedIn()){
                 return new UserActions.LoginComplete({user:user,token:token});
             }else{

@@ -64,4 +64,16 @@ export class AuthenticationService {
         }
         return false;
     }
+
+    public checkToken(token:string):boolean{
+        if (token != null && token !== '') {
+            if (this.jwtHelper.decodeToken(token).sub != null || '') {
+                if (!this.jwtHelper.isTokenExpired(token)) {
+                    this.loggedInUsername = this.jwtHelper.decodeToken(token).sub;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
