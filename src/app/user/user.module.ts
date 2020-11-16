@@ -44,7 +44,7 @@ import { SocialLoginComponent } from './social-login/social-login.component';
                 },
                 {
                   id: FacebookLoginProvider.PROVIDER_ID,
-                  provider: new FacebookLoginProvider('clientId')
+                  provider: new FacebookLoginProvider('2400624253571139')
                 }
               ]
             } as SocialAuthServiceConfig,

@@ -113,4 +113,12 @@ export class UserEffects {
         })
     )
 
+    @Effect({dispatch:false})
+    logout=this.actions.pipe(
+        ofType(UserActions.LOGOUT),
+        tap(()=>{
+            this.notifier.notify(NotificationType.SUCCESS,`Logout completed!`.toUpperCase());
+            this.authService.logOut();
+        })
+    )
 }

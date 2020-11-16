@@ -5,15 +5,15 @@ import * as UserActions from './user.actions';
 export interface State {
     loading: boolean;
     registerUser: User;
-    loginUser:User;
-    isLoggedIn:boolean;
+    loginUser: User;
+    isLoggedIn: boolean;
 }
 
 const initialState: State = {
     loading: false,
     registerUser: null,
-    loginUser:null,
-    isLoggedIn:false
+    loginUser: null,
+    isLoggedIn: false
 }
 
 export function userReducer(state = initialState, action: UserActions.RegisterType) {
@@ -38,22 +38,29 @@ export function userReducer(state = initialState, action: UserActions.RegisterTy
         case UserActions.LOGIN_COMPLETE:
             return {
                 ...state,
-                loading:false,
-                isLoggedIn:true,
-                loginUser:action.payload.user
+                loading: false,
+                isLoggedIn: true,
+                loginUser: action.payload.user
             }
         case UserActions.LOGIN_FAILED:
             return {
                 ...state,
                 loading: false,
-                loginUser:null,
-                isLoggedIn:false
+                loginUser: null,
+                isLoggedIn: false
             }
         case UserActions.START_LOGIN:
             return {
                 ...state,
                 loading: true,
-                loginUser:action.payload
+                loginUser: action.payload
+            }
+        case UserActions.LOGOUT:
+            return {
+                ...state,
+                loading: false,
+                loginUser: null,
+                isLoggedIn: false
             }
         default:
             return state;

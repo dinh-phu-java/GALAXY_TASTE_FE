@@ -29,7 +29,7 @@ export class SocialLoginComponent implements OnInit {
         this.socialUser = user;
         // this.isLoggedIn = !!user;
 
-        if (this.authService.checkToken(user.idToken)) {
+        
           this.http.
             post<HttpResponse<User>>(`${this.authService.host}/user/check-social-email`, this.socialUser, { observe: 'response' })
             .subscribe(
@@ -43,7 +43,7 @@ export class SocialLoginComponent implements OnInit {
                 this.store.dispatch(new UserActions.LoginFailed(errorRes.statusText));
               }
             );
-        };
+        
         console.log(user);
       }
     )
@@ -51,6 +51,10 @@ export class SocialLoginComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
 }

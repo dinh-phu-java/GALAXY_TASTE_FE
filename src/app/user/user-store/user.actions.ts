@@ -9,6 +9,11 @@ export const START_LOGIN = '[User] Start Login';
 export const LOGIN_COMPLETE = '[User] Login Complete';
 export const LOGIN_FAILED = '[User] Login Failed';
 export const AUTO_LOGIN= '[User] Auto Login';
+export const LOGOUT='[User] Logout';
+
+export class Logout implements Action{
+    readonly type=LOGOUT;
+}
 
 export class AutoLogin implements Action{
     readonly type=AUTO_LOGIN;
@@ -50,4 +55,5 @@ export type RegisterType =
     LoginComplete |
     StartLogin |
     LoginFailed |
-    AutoLogin;
+    AutoLogin |
+    Logout;

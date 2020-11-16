@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CartComponent } from './user-cart/cart/cart.component';
 import { CheckoutComponent } from './user-cart/checkout/checkout.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
+import { UserGuard } from './user-guard.service';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
@@ -13,7 +14,7 @@ const userRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
     { path: 'register', component: UserRegisterComponent },
     {
-        path: 'profile', component: UserProfileComponent
+        path: 'profile', component: UserProfileComponent,canActivate:[UserGuard]
     },
     {
         path: 'cart', component: UserCartComponent, children: [
